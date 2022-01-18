@@ -29,8 +29,7 @@ public class CorteConexionServiceImpl implements CorteConexionService {
         try {
             res = restTemplate.postForObject(ENDPOINT + "/todocompuWS/carteraWebController/listarCuentasCobrarCorteConexionMS", map, RespuestaWebTO.class);
         } catch (RestClientException e) {
-            res.setEstadoOperacion(RespuestaWebTO.EstadoOperacionEnum.ADVERTENCIA.getValor());
-            res.setOperacionMensaje(e.getMessage() != null ? e.getMessage() : "Error desconocido");
+            res.setMessage(e.getMessage() != null ? e.getMessage() : "Error desconocido");
         }
         return res;
     }

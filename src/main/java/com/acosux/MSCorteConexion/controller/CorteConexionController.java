@@ -32,7 +32,6 @@ public class CorteConexionController {
     @RequestMapping("/listarCuentasCobrarCorteConexion")
     public RespuestaWebTO listarCuentasCobrarCorteConexion(HttpServletRequest request, @RequestBody String json) throws Exception {
         RespuestaWebTO resp = new RespuestaWebTO();
-        resp.setEstadoOperacion(RespuestaWebTO.EstadoOperacionEnum.ADVERTENCIA.getValor());
         Map<String, Object> map = UtilsJSON.jsonToMap(json);
         map.put("empresa", "FSN");
         String cliente = UtilsJSON.jsonToObjeto(String.class, map.get("cliente"));
@@ -48,11 +47,12 @@ public class CorteConexionController {
                 map.put("hasta", anioActual + "-12-31");
                 map.put("ichfa", false);
                 resp = corteConexionService.getCarListaCuentasPorCobrarDetalladoTOCortesConexion(map);
+
             } else {
-                resp.setOperacionMensaje("Debe ingresar un código de cliente.");
+                resp.setMessage("Debe ingresar un código de cliente.");
             }
         } catch (Exception e) {
-            resp.setOperacionMensaje(e.getMessage());
+            resp.setMessage(e.getMessage());
         }
         return resp;
     }
