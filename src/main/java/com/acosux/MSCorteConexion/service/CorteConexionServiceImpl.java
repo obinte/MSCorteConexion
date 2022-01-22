@@ -25,9 +25,11 @@ public class CorteConexionServiceImpl implements CorteConexionService {
 
     @Override
     public RespuestaWebTO getCarListaCuentasPorCobrarDetalladoTOCortesConexion(Map<String, Object> map) throws Exception {
+        System.out.println("==> LLEGAMOS AL SERVICIO getCarListaCuentasPorCobrarDetalladoTOCortesConexion");
         RespuestaWebTO res = new RespuestaWebTO();
         try {
             res = restTemplate.postForObject(ENDPOINT + "/todocompuWS/carteraWebController/listarCuentasCobrarCorteConexionMS", map, RespuestaWebTO.class);
+            System.out.println("==> REGRESAMOS CON LA RESPUESTA DESDE EL SERVIDOR: " + (res != null ? res.getMessage().toString() : "SIN RESPUESTA"));
         } catch (RestClientException e) {
             res.setMessage(e.getMessage() != null ? e.getMessage() : "Error desconocido");
         }

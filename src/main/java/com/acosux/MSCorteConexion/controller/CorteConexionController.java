@@ -31,11 +31,13 @@ public class CorteConexionController {
 
     @RequestMapping("/listarCuentasCobrarCorteConexion")
     public RespuestaWebTO listarCuentasCobrarCorteConexion(HttpServletRequest request, @RequestBody String json) throws Exception {
+        System.out.println("==> LLEGAMOS AL INICIO listarCuentasCobrarCorteConexion");
         RespuestaWebTO resp = new RespuestaWebTO();
         Map<String, Object> map = UtilsJSON.jsonToMap(json);
         map.put("empresa", "FSN");
         String cliente = UtilsJSON.jsonToObjeto(String.class, map.get("cliente"));
         try {
+            System.out.println("==> RECIBIMOS LOS PARAMETROS, CLIENTE: " + cliente);
             if (cliente != null && !cliente.equals("")) {
                 Date anio = new Date();
 
@@ -46,6 +48,8 @@ public class CorteConexionController {
                 map.put("desde", anioActual + "-01-01");
                 map.put("hasta", anioActual + "-12-31");
                 map.put("ichfa", false);
+                
+                System.out.println("==> A PUNTO DE IRSE A SERVICIO: " + cliente);
                 resp = corteConexionService.getCarListaCuentasPorCobrarDetalladoTOCortesConexion(map);
 
             } else {
