@@ -17,6 +17,7 @@ import com.acosux.MSCorteConexion.service.CorteConexionService;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  *
@@ -34,9 +35,12 @@ public class CorteConexionController {
         System.out.println("==> LLEGAMOS AL INICIO listarCuentasCobrarCorteConexion");
         System.out.println("JSON: " + json);
         RespuestaWebTO resp = new RespuestaWebTO();
-        Map<String, Object> map = UtilsJSON.jsonToMap(json);
+        if (json != null) {
+            json = json.substring(8, json.length());
+        }
+        Map<String, Object> map = new HashMap<>();
         map.put("empresa", "FSN");
-        String cliente = UtilsJSON.jsonToObjeto(String.class, map.get("cliente"));
+        String cliente = json;
         try {
             System.out.println("==> RECIBIMOS LOS PARAMETROS, CLIENTE: " + cliente);
             if (cliente != null && !cliente.equals("")) {
