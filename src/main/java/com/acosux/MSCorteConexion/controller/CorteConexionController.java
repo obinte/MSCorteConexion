@@ -51,7 +51,7 @@ public class CorteConexionController {
                 LocalDate getLocalDate = anio.toInstant().atZone(timeZone).toLocalDate();
 
                 String anioActual = getLocalDate.getYear() + "";
-                map.put("desde", anioActual + "-01-01");
+                map.put("desde", "2018" + "-01-01");
                 map.put("hasta", anioActual + "-12-31");
                 map.put("ichfa", false);
 
