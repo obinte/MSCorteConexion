@@ -44,6 +44,7 @@ public class CorteConexionController {
         try {
             System.out.println("==> RECIBIMOS LOS PARAMETROS, CLIENTE: " + cliente);
             if (cliente != null && !cliente.equals("")) {
+                map.put("cliente", cliente);
                 Date anio = new Date();
 
                 ZoneId timeZone = ZoneId.systemDefault();
