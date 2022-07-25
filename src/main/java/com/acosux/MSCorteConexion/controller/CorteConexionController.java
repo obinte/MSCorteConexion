@@ -6,7 +6,6 @@
 package com.acosux.MSCorteConexion.controller;
 
 import com.acosux.MSCorteConexion.util.RespuestaWebTO;
-import com.acosux.MSCorteConexion.util.UtilsJSON;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
