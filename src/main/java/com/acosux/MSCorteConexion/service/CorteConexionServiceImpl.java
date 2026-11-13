@@ -5,12 +5,12 @@
  */
 package com.acosux.MSCorteConexion.service;
 
+import com.acosux.MSCorteConexion.config.TokenServicio;
+
 import com.acosux.MSCorteConexion.util.RespuestaWebTO;
 import com.acosux.MSCorteConexion.util.UtilsJSON;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import java.util.Date;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -28,19 +28,13 @@ public class CorteConexionServiceImpl implements CorteConexionService {
     private final RestTemplate restTemplate = new RestTemplate();
     @Value("${acosux.endpoint}")
     private String ENDPOINT;
-    private static final long VALIDITY_TIME_MS = 10 * 24 * 60 * 60 * 1000;// 10 days Validity
-    private final String secret = "mrin";
+    // US-269: token de servicio con la llave nueva y el usuario de sistema (ya no la llave vieja ni el usuario admin).
+    @Autowired
+    private TokenServicio tokenServicio;
 
     public HttpEntity<String> createTokenForUser(Map<String, Object> map) throws Exception {
-        String token = Jwts.builder()
-                .setExpiration(new Date(System.currentTimeMillis() + VALIDITY_TIME_MS))
-                .setSubject("admin")
-                .claim("userId", "admin")
-                .signWith(SignatureAlgorithm.HS256, secret)
-                .compact();
-
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer" + token);
+        headers.set("Authorization", tokenServicio.autorizacion());
         HttpEntity<String> entity = new HttpEntity<>(UtilsJSON.objetoToJson(map), headers);
         return entity;
     }
